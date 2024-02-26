@@ -26,8 +26,16 @@ for (let i = modifiedString.length - 1; i >= 0; i--) {
 return modifiedString === newString ? 'true' : 'false';
 
  };
- definitionOfPalindrom('Лёша на полке клопа нашёл ');
+definitionOfPalindrom('Лёша на полке клопа нашёл ');
 
 //Извлекаем цифры
+// let extractionOfNumber = (string) => {
+// for (let i = 0; i <= string.length - 1; i++) {
+//   let number = parseInt(string[i]);
+//   console.log(number);
+// }
+// };
+//  console.log(extractionOfNumber('2022'));
+//  console.log(extractionOfNumber('s202s2d'));
 
 
