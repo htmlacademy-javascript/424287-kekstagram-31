@@ -16,17 +16,17 @@ stringLength('проверяемая строка', 10);
 const definitionOfPalindrom = (string) => {
   string = string.replaceAll(' ', '');
 
-let modifiedString = string.toLowerCase();
-let newString = "";
-for (let i = modifiedString.length - 1; i >= 0; i--) {
-  newString += modifiedString[i];
+  const modifiedString = string.toLowerCase();
+  let newString = '';
+  for (let i = modifiedString.length - 1; i >= 0; i--) {
+    newString += modifiedString[i];
 
-}
+  }
 
-return modifiedString === newString ? 'true' : 'false';
+  return modifiedString === newString ? 'true' : 'false';
 
- };
- definitionOfPalindrom('Лёша на полке клопа нашёл ');
+};
+definitionOfPalindrom('Лёша на полке клопа нашёл ');
 
 //Извлекаем цифры
 
