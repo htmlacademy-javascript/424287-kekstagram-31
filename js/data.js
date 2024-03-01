@@ -63,5 +63,5 @@ const describePhotos = () => {
 };
 const similarPhotos = Array.from({length: 25}, describePhotos);
 
-similarPhotos();
+export {similarPhotos};
 
