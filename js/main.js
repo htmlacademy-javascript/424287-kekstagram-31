@@ -1,2 +1,2 @@
-import {similarPhotos} from './data.js';
-similarPhotos();
+
+import './create-miniatures.js';

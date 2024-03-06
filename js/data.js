@@ -27,9 +27,10 @@ const MESSAGES = [
 ];
 const ID_START = 1;
 const ID_END = 25;
-const MAX_NUMBERS_OF_COMMENTS = 30;
+const MAX_NUMBERS_OF_COMMENTS = getRandomInteger(0,30);
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
+const NUMBER_OF_PHOTOS = 25;
 
 
 const getComments = () => {
@@ -61,7 +62,6 @@ const describePhotos = () => {
     comments: getComments()
   };
 };
-const similarPhotos = Array.from({length: 25}, describePhotos);
+const similarPhotos = Array.from({length: NUMBER_OF_PHOTOS}, describePhotos);
 
 export {similarPhotos};
-

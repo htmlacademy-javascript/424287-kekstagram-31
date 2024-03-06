@@ -42,9 +42,7 @@ const convertToMinutes = (el) => {
   const time = el.split(':').map((elem) => parseInt(elem,10));
   time[0] *= 60;
 
-  const getMinutes = time.reduce((sum, element) => sum + element, 0);
-
-  return getMinutes;
+  return time.reduce((sum, element) => sum + element, 0);
 };
 const isInDay = (startOfDay,endOfDay,startOfMeeting,durationOfMeeting) => {
   const timeOfStart = convertToMinutes(startOfDay);
