@@ -27,7 +27,7 @@ const MESSAGES = [
 ];
 const ID_START = 1;
 const ID_END = 25;
-const MAX_NUMBERS_OF_COMMENTS = getRandomInteger(0,30);
+// const MAX_NUMBERS_OF_COMMENTS = getRandomInteger(0,30);
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const NUMBER_OF_PHOTOS = 25;
@@ -49,8 +49,8 @@ const NUMBER_OF_PHOTOS = 25;
 // };
 
 // const similarComments = Array.from({length: 30}, getComments);
-const generateCommentId = createRandomId(1,25);
-const getNumberPhoto = createRandomId(1,25);
+const generateCommentId = createRandomId(ID_START,ID_END);
+const getNumberPhoto = createRandomId(ID_START,ID_END);
 
 const getComments = () => ({
   id: generateCommentId(),
