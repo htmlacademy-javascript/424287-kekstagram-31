@@ -33,35 +33,52 @@ const MAX_LIKES = 200;
 const NUMBER_OF_PHOTOS = 25;
 
 
-const getComments = () => {
+// const getComments = () => {
 
 
-  const arrayOfComments = [];
-  for(let i = 1; i <= MAX_NUMBERS_OF_COMMENTS; i++) {
-    arrayOfComments.push({
-      id: i,
-      avatar: `img/avatar-${ getRandomInteger(1,6)}.svg`,
-      message: randomElement(MESSAGES),
-      name: randomElement(NAMES),
-    });
-  }
-  return arrayOfComments;
-};
+//   const arrayOfComments = [];
+//   for(let i = 1; i <= MAX_NUMBERS_OF_COMMENTS; i++) {
+//     arrayOfComments.push({
+//       id: i,
+//       avatar: `img/avatar-${ getRandomInteger(1,6)}.svg`,
+//       message: randomElement(MESSAGES),
+//       name: randomElement(NAMES),
+//     });
+//   }
+//   return arrayOfComments;
+// };
 
 // const similarComments = Array.from({length: 30}, getComments);
+const generateCommentId = createRandomId(1,25);
+const getNumberPhoto = createRandomId(1,25);
 
-const describePhotos = () => {
-  const randomIdIndex = createRandomId(ID_START,ID_END);
+const getComments = () => ({
+  id: generateCommentId(),
+  avatar: `img/avatar-${ getRandomInteger(1,6)}.svg`,
+  message: randomElement(MESSAGES),
+  name: randomElement(NAMES),
+});
+
+const describePhotos = () => ({
+  id: generateCommentId(),
+  url: `photos/${getNumberPhoto()}.jpg`,
+  description: randomElement(DESCRIPTION),
+  likes: getRandomInteger(MIN_LIKES,MAX_LIKES),
+  comments: Array.from({length: getRandomInteger(0,30)}, getComments),
+});
+// const describePhotos = () => {
+//   const randomIdIndex = createRandomId(ID_START,ID_END);
 
 
-  return {
-    id: randomIdIndex(),
-    url: `photos/${ randomIdIndex() }.jpg`,
-    description: randomElement(DESCRIPTION),
-    likes: getRandomInteger(MIN_LIKES,MAX_LIKES),
-    comments: getComments()
-  };
-};
-const similarPhotos = Array.from({length: NUMBER_OF_PHOTOS}, describePhotos);
+//   return {
+//     id: randomIdIndex(),
+//     url: `photos/${ randomIdIndex() }.jpg`,
+//     description: randomElement(DESCRIPTION),
+//     likes: getRandomInteger(MIN_LIKES,MAX_LIKES),
+//     comments: getComments()
+//   };
+// };
+const similarPhotos = () =>
+  Array.from({length: NUMBER_OF_PHOTOS}, describePhotos);
 
 export {similarPhotos};

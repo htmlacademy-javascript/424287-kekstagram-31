@@ -1,6 +1,6 @@
 import {similarPhotos} from './data.js';
 const similarPictures = document.querySelector('.pictures');
-const similarMiniatures = similarPhotos;
+const similarMiniatures = similarPhotos();
 
 const photosTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
