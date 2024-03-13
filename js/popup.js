@@ -1,5 +1,4 @@
 import {similarPictures,similarMiniatures} from './create-miniatures.js';
-import {similarComments} from './data.js';
 
 const popup = document.querySelector('.big-picture');
 const likeCounter = popup.querySelector('.likes-count');
@@ -19,12 +18,8 @@ const openModal = () => {
 };
 /* ------*/
 const commentsFragment = document.createDocumentFragment();
-// const commentArray = similarComments();
 const commentsList = document.querySelector('.social__comments');
 commentsList.innerHTML = '';
-const list = document.createElement('li');
-const commentAvatar = document.createElement('img');
-const commentText = document.createElement('p');
 
 
 similarPictures.addEventListener('click', (evt) => {
@@ -39,6 +34,9 @@ similarPictures.addEventListener('click', (evt) => {
         photoDescription.textContent = description;
 
         comments.forEach(({avatar,message,name}) => {
+          const list = document.createElement('li');
+          const commentAvatar = document.createElement('img');
+          const commentText = document.createElement('p');
           list.classList.add('social__comment');
           commentAvatar.classList.add('social__picture');
           commentAvatar.width = 35;
