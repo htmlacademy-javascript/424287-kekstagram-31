@@ -33,52 +33,30 @@ const MAX_LIKES = 200;
 const NUMBER_OF_PHOTOS = 25;
 
 
-// const getComments = () => {
-
-
-//   const arrayOfComments = [];
-//   for(let i = 1; i <= MAX_NUMBERS_OF_COMMENTS; i++) {
-//     arrayOfComments.push({
-//       id: i,
-//       avatar: `img/avatar-${ getRandomInteger(1,6)}.svg`,
-//       message: randomElement(MESSAGES),
-//       name: randomElement(NAMES),
-//     });
-//   }
-//   return arrayOfComments;
-// };
-
-// const similarComments = Array.from({length: 30}, getComments);
-const generateCommentId = createRandomId(ID_START,ID_END);
+// const generateCommentId = createRandomId(ID_START,ID_END);
 const getNumberPhoto = createRandomId(ID_START,ID_END);
-
+let j = 0;
 const getComments = () => ({
-  id: generateCommentId(),
+  // id: generateCommentId(),
+  id: j++,
+
   avatar: `img/avatar-${ getRandomInteger(1,6)}.svg`,
   message: randomElement(MESSAGES),
   name: randomElement(NAMES),
 });
-
+const similarComments = () =>
+  Array.from({length: getRandomInteger(0,30)}, getComments);
+let i = 0;
 const describePhotos = () => ({
-  id: generateCommentId(),
+  // id: generateCommentId(),
+  id: i++,
   url: `photos/${getNumberPhoto()}.jpg`,
   description: randomElement(DESCRIPTION),
   likes: getRandomInteger(MIN_LIKES,MAX_LIKES),
-  comments: Array.from({length: getRandomInteger(0,30)}, getComments),
+  comments: similarComments(),
 });
-// const describePhotos = () => {
-//   const randomIdIndex = createRandomId(ID_START,ID_END);
-
-
-//   return {
-//     id: randomIdIndex(),
-//     url: `photos/${ randomIdIndex() }.jpg`,
-//     description: randomElement(DESCRIPTION),
-//     likes: getRandomInteger(MIN_LIKES,MAX_LIKES),
-//     comments: getComments()
-//   };
-// };
 const similarPhotos = () =>
   Array.from({length: NUMBER_OF_PHOTOS}, describePhotos);
+export {similarPhotos,similarComments};
 
-export {similarPhotos};
+
