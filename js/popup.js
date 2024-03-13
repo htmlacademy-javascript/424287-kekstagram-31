@@ -51,6 +51,8 @@ similarPictures.addEventListener('click', (evt) => {
           commentAvatar.alt = name;
 
           commentsFragment.appendChild(list);
+          commentsList.innerHTML = '';
+
         });
       }
     });
