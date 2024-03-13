@@ -37,19 +37,6 @@ const createCommentTemplate = () => {
   commentAvatar.width = 35;
   commentAvatar.height = 35;
 };
-const comment = () => {
-  commentArray.forEach(({avatar,message,name}) => {
-
-    createCommentTemplate();
-    commentText.textContent = message;
-    commentAvatar.src = avatar;
-    commentAvatar.alt = name;
-
-    commentsFragment.appendChild(list);
-
-  });
-
-};
 
 
 similarPictures.addEventListener('click', (evt) => {
@@ -63,9 +50,14 @@ similarPictures.addEventListener('click', (evt) => {
         numberOfComments.textContent = comments.length;
         photoDescription.textContent = description;
 
-        comment();
+        commentArray.forEach(({avatar,message,name}) => {
+          createCommentTemplate();
+          commentText.textContent = message;
+          commentAvatar.src = avatar;
+          commentAvatar.alt = name;
 
-
+          commentsFragment.appendChild(list);
+        });
       }
     });
     commentsList.appendChild(commentsFragment);
