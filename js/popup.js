@@ -37,8 +37,6 @@ const createCommentTemplate = () => {
   commentAvatar.width = 35;
   commentAvatar.height = 35;
 };
-
-
 similarPictures.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')){
     evt.preventDefault();
