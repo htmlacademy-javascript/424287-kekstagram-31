@@ -19,24 +19,14 @@ const openModal = () => {
 };
 /* ------*/
 const commentsFragment = document.createDocumentFragment();
-const commentArray = similarComments();
+// const commentArray = similarComments();
 const commentsList = document.querySelector('.social__comments');
 commentsList.innerHTML = '';
 const list = document.createElement('li');
 const commentAvatar = document.createElement('img');
 const commentText = document.createElement('p');
 
-const createCommentTemplate = () => {
-  list.classList.add('social__comment');
-  commentAvatar.classList.add('social__picture');
-  commentAvatar.width = 35;
-  commentAvatar.height = 35;
-  commentText.classList.add('social__text');
-  list.appendChild(commentAvatar);
-  list.appendChild(commentText);
-  commentAvatar.width = 35;
-  commentAvatar.height = 35;
-};
+
 similarPictures.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')){
     evt.preventDefault();
@@ -48,8 +38,16 @@ similarPictures.addEventListener('click', (evt) => {
         numberOfComments.textContent = comments.length;
         photoDescription.textContent = description;
 
-        commentArray.forEach(({avatar,message,name}) => {
-          createCommentTemplate();
+        comments.forEach(({avatar,message,name}) => {
+          list.classList.add('social__comment');
+          commentAvatar.classList.add('social__picture');
+          commentAvatar.width = 35;
+          commentAvatar.height = 35;
+          commentText.classList.add('social__text');
+          list.appendChild(commentAvatar);
+          list.appendChild(commentText);
+          commentAvatar.width = 35;
+          commentAvatar.height = 35;
           commentText.textContent = message;
           commentAvatar.src = avatar;
           commentAvatar.alt = name;
