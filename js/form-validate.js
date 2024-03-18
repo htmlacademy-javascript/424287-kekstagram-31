@@ -28,10 +28,15 @@ const closeSuccessMessage = () => {
 };
 
 const onDocumentKeydown = (evt) => {
+
   if(evt.key === 'Escape') {
     evt.preventDefault();
-    closeModal();
-    closeSuccessMessage();
+    if (evt.target === tagText || evt.target === commentText) {
+      evt.stopPropagation();
+    } else {
+      closeModal();
+      closeSuccessMessage();
+    }
   }
 };
 
@@ -50,15 +55,47 @@ const pristine = new Pristine(uploadForm,{
 
 });
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
-const validateHashtag = (value) =>
-  hashtag.test(value);
+const validateHashtag = (value) => {
+  if(value === '') {
+    return true;
+  }
+  const arr = value.trim().split(' ');
 
+  return arr.every((elem) => hashtag.test(elem));
+};
 
+function validateCountOfHashtags (value) {
+  const arr = value.trim().split(' ');
+  if(arr.length <= 5) {
+    return true;
+  }
+}
 const validateComment = (value) =>
   value.length <= 140;
 
+const validateRepeatHashes = (value) => {
+  const arr = value.trim().split(' ');
+
+  const duplicates = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] === arr[j] && !duplicates.includes(arr[i])) {
+        duplicates.push(arr[i]);
+      }
+    }
+  }
+  if(duplicates.length > 0) {
+    return false;
+  } else {
+    return true;
+  }
+
+};
 // Проверка формы на валидность
 pristine.addValidator(tagText, validateHashtag,'Введите валидный хэштег');
+pristine.addValidator(tagText, validateCountOfHashtags,'Нельзя указывать больше пяти хэштегов');
+pristine.addValidator(tagText, validateRepeatHashes,'Нельзя указывать одинаковые хэштеги');
 
 pristine.addValidator(commentText, validateComment,'Длина комментария не должна быть больше 140 символов');
 
@@ -71,7 +108,6 @@ uploadForm.addEventListener('submit', (evt) => {
     closeBtn.addEventListener('click', closeSuccessMessage);
   }
 });
-
 
 document.addEventListener('keydown', onDocumentKeydown);
 
