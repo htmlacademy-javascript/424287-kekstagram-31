@@ -11,6 +11,7 @@ const showSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessageFragment = document.createDocumentFragment();
   const message = successMessageTemplate.cloneNode(true);
+  message.classList.add('hidden');
   successMessageFragment.appendChild(message);
   document.body.appendChild(successMessageFragment);
 };
@@ -101,12 +102,14 @@ pristine.addValidator(tagText, validateCountOfHashtags,'Нельзя указы�
 pristine.addValidator(tagText, validateRepeatHashes,'Нельзя указывать одинаковые хэштеги');
 
 pristine.addValidator(commentText, validateComment,'Длина комментария не должна быть больше 140 символов');
+showSuccessMessage();
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    showSuccessMessage();
+    document.querySelector('.success').classList.remove('hidden');
+
     const closeBtn = document.querySelector('.success__button');
     closeBtn.addEventListener('click', closeSuccessMessage);
   }
