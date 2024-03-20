@@ -14,12 +14,15 @@ const showSuccessMessage = () => {
   document.body.appendChild(successMessageFragment);
 };
 const closeModal = () => {
+  // if (evt.target === tagText || evt.target === commentText || evt.target.closest('.effects__list') || evt.target.closest('.img-upload__effect-level') || evt.target.closest('.img-upload__submit')) {
+  //   evt.stopPropagation();
+  // } else {
   popupEditPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadPhoto.value = '';
   tagText.value = '';
   commentText.value = '';
-
+  // }
   // document.removeEventListener('keydown', onDocumentKeydown);
 };
 const closeSuccessMessage = () => {
