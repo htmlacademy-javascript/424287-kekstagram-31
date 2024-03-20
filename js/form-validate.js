@@ -5,7 +5,8 @@ const uploadPhoto = document.querySelector('.img-upload__input');
 const uploadForm = document.querySelector('.img-upload__form');
 const tagText = uploadForm.querySelector('.text__hashtags');
 const commentText = uploadForm.querySelector('.text__description');
-
+const COMMENT_LENGTH = 140;
+const NUMBER_HASHTAGS = 5;
 const showSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessageFragment = document.createDocumentFragment();
@@ -69,12 +70,13 @@ const validateHashtag = (value) => {
 
 function validateCountOfHashtags (value) {
   const arr = value.trim().split(' ');
-  if(arr.length <= 5) {
+  if(arr.length <= NUMBER_HASHTAGS) {
     return true;
   }
 }
 const validateComment = (value) =>
-  value.length <= 140;
+  value.length <= COMMENT_LENGTH;
+
 
 const validateRepeatHashes = (value) => {
   const arr = value.trim().split(' ');
@@ -88,11 +90,9 @@ const validateRepeatHashes = (value) => {
       }
     }
   }
-  if(duplicates.length > 0) {
-    return false;
-  } else {
-    return true;
-  }
+
+  return !duplicates.length > 0;
+
 
 };
 // Проверка формы на валидность
