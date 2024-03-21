@@ -85,7 +85,6 @@ effectList.addEventListener('change', (evt) => {
     } else {
       effectLevelContainer.classList.remove('hidden');
       effectsInput.value = imageContainer.style.filter;
-      console.log(effectsInput.value);
     }
   });
 
