@@ -3,7 +3,7 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectList = document.querySelector('.effects__list');
 const valueElement = document.querySelector('.effect-level__value');
-
+const effectsInput = document.querySelector('.effects__radio');
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -84,7 +84,8 @@ effectList.addEventListener('change', (evt) => {
 
     } else {
       effectLevelContainer.classList.remove('hidden');
-
+      effectsInput.value = imageContainer.style.filter;
+      console.log(effectsInput.value);
     }
   });
 
