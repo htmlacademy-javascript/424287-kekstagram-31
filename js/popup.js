@@ -11,7 +11,6 @@ const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 // const miniatures = similarMiniatures;
 import {renderSimilarPhotos} from './create-miniatures.js';
-const photos = similarPictures;
 const openModal = () => {
 
   popup.classList.remove('hidden');
@@ -36,8 +35,6 @@ const openBigPhoto = (id) => {
       const commentText = document.createElement('p');
       list.classList.add('social__comment');
       commentAvatar.classList.add('social__picture');
-      commentAvatar.width = 35;
-      commentAvatar.height = 35;
       commentText.classList.add('social__text');
       list.appendChild(commentAvatar);
       list.appendChild(commentText);
@@ -58,6 +55,7 @@ const openBigPhoto = (id) => {
 };
 similarPictures.addEventListener('click', (evt) => {
   evt.preventDefault();
+  openBigPhoto();
   if (evt.target.closest('.picture')){
     openBigPhoto(evt.target.closest('.picture').dataset.id);
   }
