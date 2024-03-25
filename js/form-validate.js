@@ -1,3 +1,13 @@
+import {imageContainer} from './photo-resize.js';
+import {effectLevelContainer} from './effect-slider.js';
+import {showErrorMessage,createErrorMessage} from './util.js';
+const COMMENT_LENGTH = 140;
+const NUMBER_HASHTAGS = 5;
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+const submitButton = document.querySelector('.img-upload__submit');
 const uploadImg = document.querySelector('.img-upload__input');
 const closeButton = document.querySelector('.img-upload__cancel');
 const popupEditPhoto = document.querySelector('.img-upload__overlay');
@@ -5,8 +15,8 @@ const uploadPhoto = document.querySelector('.img-upload__input');
 const uploadForm = document.querySelector('.img-upload__form');
 const tagText = uploadForm.querySelector('.text__hashtags');
 const commentText = uploadForm.querySelector('.text__description');
-const COMMENT_LENGTH = 140;
-const NUMBER_HASHTAGS = 5;
+
+
 const showSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessageFragment = document.createDocumentFragment();
@@ -22,8 +32,13 @@ const closeModal = () => {
   popupEditPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadPhoto.value = '';
-  tagText.value = '';
-  commentText.value = '';
+  imageContainer.style.transform = 'scale(1)';
+  imageContainer.style.filter = 'none';
+  effectLevelContainer.classList.add('hidden');
+
+  uploadForm.reset();
+
+
   // }
   // document.removeEventListener('keydown', onDocumentKeydown);
 };
@@ -65,7 +80,6 @@ const validateHashtag = (value) => {
     return true;
   }
   const arr = value.trim().split(' ');
-
   return arr.every((elem) => hashtag.test(elem));
 };
 
@@ -81,9 +95,7 @@ const validateComment = (value) =>
 
 const validateRepeatHashes = (value) => {
   const arr = value.trim().split(' ');
-
   const duplicates = [];
-
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[i] === arr[j] && !duplicates.includes(arr[i])) {
@@ -103,19 +115,53 @@ pristine.addValidator(tagText, validateRepeatHashes,'Нельзя указыва
 
 pristine.addValidator(commentText, validateComment,'Длина комментария не должна быть больше 140 символов');
 showSuccessMessage();
+createErrorMessage();
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    document.querySelector('.success').classList.remove('hidden');
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
-    const closeBtn = document.querySelector('.success__button');
-    closeBtn.addEventListener('click', closeSuccessMessage);
-  }
-});
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(uploadForm);
+      fetch('https://31.javascript.htmlacademy.pro/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+          } else {
+            showErrorMessage();
+          }
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+const closeUserModal = () => {
+  document.querySelector('.success').classList.remove('hidden');
+  const closeBtn = document.querySelector('.success__button');
+  closeBtn.addEventListener('click', closeSuccessMessage);
 
+};
 document.addEventListener('keydown', onDocumentKeydown);
 
 closeButton.addEventListener('click', closeModal);
+// closeModalBtn.addEventListener('click',closeModal);
 // document.querySelector('.img-upload__overlay').addEventListener('click', closeModal);
+export {setUserFormSubmit, closeUserModal};
