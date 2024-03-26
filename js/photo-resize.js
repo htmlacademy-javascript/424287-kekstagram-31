@@ -29,4 +29,4 @@ btnBigger.addEventListener('click', () => {
 
   }
 });
-export {imageContainer,scaleValue};
+export {imageContainer,scaleValue,value};

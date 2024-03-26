@@ -41,6 +41,13 @@ const createErrorMessage = () => {
   document.body.appendChild(errorMessageFragment);
   document.querySelector('.error').classList.add('hidden');
 };
+const onDocumentKeydown = (evt) => {
+  if(evt.key === 'Escape') {
+    evt.preventDefault();
+    document.querySelector('.error').classList.add('hidden');
+  }
+};
+
 const showErrorMessage = () => {
   document.querySelector('.error').classList.remove('hidden');
 
@@ -50,6 +57,7 @@ const showErrorMessage = () => {
     document.querySelector('.error').classList.add('hidden');
     document.querySelector('.error').addEventListener('click', () => {
       document.querySelector('.error').classList.add('hidden');
+      onDocumentKeydown();
 
     });
 

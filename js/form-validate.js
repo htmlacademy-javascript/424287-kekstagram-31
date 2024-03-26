@@ -1,6 +1,8 @@
 import {imageContainer} from './photo-resize.js';
-import {effectLevelContainer} from './effect-slider.js';
-import {showErrorMessage,createErrorMessage} from './util.js';
+import {effectLevelContainer,effectsInput} from './effect-slider.js';
+import {showErrorMessage} from './util.js';
+import {sendData} from './api.js';
+
 const COMMENT_LENGTH = 140;
 const NUMBER_HASHTAGS = 5;
 const SubmitButtonText = {
@@ -32,9 +34,11 @@ const closeModal = () => {
   popupEditPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadPhoto.value = '';
-  imageContainer.style.transform = 'scale(1)';
+  imageContainer.style.transform = 'unset';
   imageContainer.style.filter = 'none';
   effectLevelContainer.classList.add('hidden');
+  effectsInput.value = 'none';
+  imageContainer.style.transform = 'none';
 
   uploadForm.reset();
 
@@ -115,7 +119,7 @@ pristine.addValidator(tagText, validateRepeatHashes,'Нельзя указыва
 
 pristine.addValidator(commentText, validateComment,'Длина комментария не должна быть больше 140 символов');
 showSuccessMessage();
-createErrorMessage();
+// createErrorMessage();
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -132,20 +136,8 @@ const setUserFormSubmit = (onSuccess) => {
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      const formData = new FormData(uploadForm);
-      fetch('https://31.javascript.htmlacademy.pro/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
-        .then((response) => {
-          if (response.ok) {
-            onSuccess();
-          } else {
-            showErrorMessage();
-          }
-        })
+      sendData(new FormData(uploadForm))
+        .then(onSuccess)
         .catch(() => {
           showErrorMessage();
         })

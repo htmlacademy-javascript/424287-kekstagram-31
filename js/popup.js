@@ -1,4 +1,4 @@
-import {similarPictures,similarMiniatures} from './create-miniatures.js';
+import {similarPictures} from './create-miniatures.js';
 
 const popup = document.querySelector('.big-picture');
 const likeCounter = popup.querySelector('.likes-count');
@@ -9,58 +9,61 @@ const numberOfComments = document.querySelector('.social__comment-total-count');
 const photoDescription = document.querySelector('.social__caption');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
-// const miniatures = similarMiniatures;
-import {renderSimilarPhotos} from './create-miniatures.js';
+
 const openModal = () => {
-
   popup.classList.remove('hidden');
-
 };
 /* ------*/
+const commentsFragment = document.createDocumentFragment();
+const commentsList = document.querySelector('.social__comments');
+commentsList.innerHTML = '';
+const openPopUp = (miniatures) => {
+  similarPictures.addEventListener('click', (evt) => {
+    if (evt.target.closest('.picture')){
+      evt.preventDefault();
+      openModal();
 
-const openBigPhoto = (id) => {
-  const miniatures = photos.find((photo) => photo.id === Number(id));
-  const commentsFragment = document.createDocumentFragment();
-  const commentsList = document.querySelector('.social__comments');
-  commentsList.innerHTML = '';
-  openModal();
-  miniatures.forEach(({url,likes,comments,description}) => {
-    photoUrl.src = url;
-    likeCounter.textContent = likes;
-    numberOfComments.textContent = comments.length;
-    photoDescription.textContent = description;
-    comments.forEach(({avatar,message,name}) => {
-      const list = document.createElement('li');
-      const commentAvatar = document.createElement('img');
-      const commentText = document.createElement('p');
-      list.classList.add('social__comment');
-      commentAvatar.classList.add('social__picture');
-      commentText.classList.add('social__text');
-      list.appendChild(commentAvatar);
-      list.appendChild(commentText);
-      commentAvatar.width = 35;
-      commentAvatar.height = 35;
-      commentText.textContent = message;
-      commentAvatar.src = avatar;
-      commentAvatar.alt = name;
+      miniatures.forEach(({id,url,likes,comments,description}) => {
 
-      commentsFragment.appendChild(list);
-      commentsList.innerHTML = '';
-    });
+        if(Number(evt.target.dataset.id) === id) {
+          photoUrl.src = url;
+          likeCounter.textContent = likes;
+          numberOfComments.textContent = comments.length;
+          photoDescription.textContent = description;
+
+          comments.forEach(({avatar,message,name}) => {
+            const list = document.createElement('li');
+            const commentAvatar = document.createElement('img');
+            const commentText = document.createElement('p');
+            list.classList.add('social__comment');
+            commentAvatar.classList.add('social__picture');
+            commentAvatar.width = 35;
+            commentAvatar.height = 35;
+            commentText.classList.add('social__text');
+            list.appendChild(commentAvatar);
+            list.appendChild(commentText);
+            commentAvatar.width = 35;
+            commentAvatar.height = 35;
+            commentText.textContent = message;
+            commentAvatar.src = avatar;
+            commentAvatar.alt = name;
+
+            commentsFragment.appendChild(list);
+            commentsList.innerHTML = '';
+
+          });
+        }
+      });
+    }
     commentsList.appendChild(commentsFragment);
+
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
     document.querySelector('body').classList.add('modal-open');
-  });
-};
-similarPictures.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  openBigPhoto();
-  if (evt.target.closest('.picture')){
-    openBigPhoto(evt.target.closest('.picture').dataset.id);
   }
-});
-/* ------*/
+  );
+};
+
 const closeModal = () => {
   popup.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
@@ -79,4 +82,4 @@ document.addEventListener('keydown', onDocumentKeydown);
 closeButton.addEventListener('click', closeModal);
 document.querySelector('.overlay').addEventListener('click', closeModal);
 
-// export {getPhotoData};
+export {openPopUp};
