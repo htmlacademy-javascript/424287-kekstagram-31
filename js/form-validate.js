@@ -17,6 +17,7 @@ const uploadPhoto = document.querySelector('.img-upload__input');
 const uploadForm = document.querySelector('.img-upload__form');
 const tagText = uploadForm.querySelector('.text__hashtags');
 const commentText = uploadForm.querySelector('.text__description');
+const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
 
 const showSuccessMessage = () => {
@@ -38,8 +39,8 @@ const closeModal = () => {
   imageContainer.style.filter = 'none';
   effectLevelContainer.classList.add('hidden');
   effectsInput.value = 'none';
-  imageContainer.style.transform = 'none';
-
+  imageContainer.style.transform = 'scale(1)';
+  imagePreview.style.transform = 'scale(1)';
   uploadForm.reset();
 
 
