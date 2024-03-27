@@ -87,8 +87,6 @@ effectList.addEventListener('change', (evt) => {
       effectsInput.value = imageContainer.style.filter;
     }
   });
-
-
 });
 
-
+export {effectsInput,effectLevelContainer};

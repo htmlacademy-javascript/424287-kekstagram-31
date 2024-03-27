@@ -6,9 +6,10 @@ const inputValue = document.querySelector('.scale__control--value');
 const STEP = 25;
 const minValue = 25;
 const maxValue = 100;
-let value = scaleValue.value.replace('%', ' ');
+// let value = scaleValue.value.replace('%', ' ');
 
 btnSmaller.addEventListener('click', () => {
+  let value = scaleValue.value.replace('%', ' ');
 
   if (value > minValue) {
 
@@ -17,9 +18,11 @@ btnSmaller.addEventListener('click', () => {
     imageContainer.style.transform = `scale(${value / 100})`;
     inputValue.value = value;
     scaleValue.value = `${value}%`;
+
   }
 });
 btnBigger.addEventListener('click', () => {
+  let value = scaleValue.value.replace('%', ' ');
 
   if (value < maxValue) {
     value += STEP;
@@ -29,4 +32,4 @@ btnBigger.addEventListener('click', () => {
 
   }
 });
-export {imageContainer};
+export {imageContainer,scaleValue};
