@@ -24,7 +24,6 @@ getData()
   .then(() => {
     showFilter();
   })
-
   .catch(() => {
     showErrorDataMessage();
   });
