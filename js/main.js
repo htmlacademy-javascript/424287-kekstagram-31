@@ -6,7 +6,7 @@ import './effect-slider.js';
 import './api.js';
 import './avatar.js';
 
-import {renderSimilarPhotos,showFilter,setFilter} from './create-miniatures.js';
+import {setFilter} from './create-miniatures.js';
 import {setUserFormSubmit, closeUserModal} from './form-validate.js';
 import {getData} from './api.js';
 
@@ -15,14 +15,9 @@ import {openPopUp} from './popup.js';
 
 getData()
   .then((photos) => {
-    renderSimilarPhotos(photos);
-    setFilter(()=>{
-      renderSimilarPhotos(photos);
-    });
+    // renderSimilarPhotos(photos);
+    setFilter(photos);
     openPopUp(photos);
-  })
-  .then(() => {
-    showFilter();
   })
   .catch(() => {
     showErrorDataMessage();

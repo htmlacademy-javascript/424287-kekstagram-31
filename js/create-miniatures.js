@@ -1,7 +1,8 @@
 
 const similarPictures = document.querySelector('.pictures');
 const photosTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const btnDiscussed = document.getElementById('filter-discussed');
+const filterForm = document.querySelector('.img-filters__form');
+const buttonChangeFilter = document.querySelector('img-filters__button');
 const getLike = (photo) => {
   const like = photo.likes;
   return like;
@@ -11,21 +12,12 @@ const compareLikes = (photoA, photoB) => {
   const likeB = getLike(photoB);
   return likeB - likeA;
 };
-const setFilter = (similarMiniatures) => {
-  btnDiscussed.addEventListener('click', () => {
-
-    console.log(similarMiniatures);
-    // cb());
-    // console.log(cb);
-  });
-};
 
 const renderSimilarPhotos = (similarMiniatures) => {
 
   const miniaturesFragment = document.createDocumentFragment();
-
   similarMiniatures
-    .slice()
+    // .slice()
     // .sort(compareLikes)
     .forEach(({id,url,description,likes,comments}) => {
       const photo = photosTemplate.cloneNode(true);
@@ -41,9 +33,21 @@ const renderSimilarPhotos = (similarMiniatures) => {
   similarPictures.appendChild(miniaturesFragment);
 
 };
-const showFilter = () =>
+const changeFilter = (posts) => {
+  filterForm.addEventListener('click', (evt) => {
+
+    if(evt.target.id === 'filter-discussed') {
+      evt.target.classList.add('img-filters__button--active');
+      const newPosts = [...posts];
+      renderSimilarPhotos(newPosts.sort((a,b) => b.likes - a.likes));
+    }
+  });
+};
+const setFilter = (posts) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  renderSimilarPhotos(posts);
+  changeFilter(posts);
+};
 
-
-export {renderSimilarPhotos, similarPictures,showFilter,setFilter};
+export {renderSimilarPhotos, similarPictures,setFilter};
 
