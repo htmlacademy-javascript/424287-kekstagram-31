@@ -63,7 +63,16 @@ const showErrorMessage = () => {
 
   });
 };
+const debounce = (callback, timeoutDelay = 500) => {
+
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 export {randomElement};
 export {getRandomInteger};
 export {createRandomId};
-export {showErrorDataMessage,showErrorMessage, createErrorMessage};
+export {showErrorDataMessage,showErrorMessage, createErrorMessage,debounce};

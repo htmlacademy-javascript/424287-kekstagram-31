@@ -12,10 +12,8 @@ import {getData} from './api.js';
 
 import {showErrorDataMessage} from './util.js';
 import {openPopUp} from './popup.js';
-
 getData()
   .then((photos) => {
-    // renderSimilarPhotos(photos);
     setFilter(photos);
     openPopUp(photos);
   })
@@ -24,3 +22,4 @@ getData()
   });
 
 setUserFormSubmit(closeUserModal);
+

@@ -1,24 +1,21 @@
-
+import { debounce } from './util.js';
+const TIME_OF_DELAY = 500;
 const similarPictures = document.querySelector('.pictures');
 const photosTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const filterForm = document.querySelector('.img-filters__form');
-const buttonChangeFilter = document.querySelector('img-filters__button');
-const getLike = (photo) => {
-  const like = photo.likes;
-  return like;
-};
-const compareLikes = (photoA, photoB) => {
-  const likeA = getLike(photoA);
-  const likeB = getLike(photoB);
-  return likeB - likeA;
-};
+const buttonsChangeFilter = document.querySelectorAll('.img-filters__button');
 
 const renderSimilarPhotos = (similarMiniatures) => {
 
   const miniaturesFragment = document.createDocumentFragment();
+  const pictures = document.querySelectorAll('.picture');
+
+  for (const img of pictures) {
+    similarPictures.removeChild(img);
+  }
+
+
   similarMiniatures
-    // .slice()
-    // .sort(compareLikes)
     .forEach(({id,url,description,likes,comments}) => {
       const photo = photosTemplate.cloneNode(true);
       photo.querySelector('.picture__img').src = url;
@@ -34,14 +31,24 @@ const renderSimilarPhotos = (similarMiniatures) => {
 
 };
 const changeFilter = (posts) => {
-  filterForm.addEventListener('click', (evt) => {
 
-    if(evt.target.id === 'filter-discussed') {
+  filterForm.addEventListener('click', debounce(
+    (evt) => {
+      for (const btn of buttonsChangeFilter) {
+        btn.classList.remove('img-filters__button--active');
+      }
       evt.target.classList.add('img-filters__button--active');
-      const newPosts = [...posts];
-      renderSimilarPhotos(newPosts.sort((a,b) => b.likes - a.likes));
-    }
-  });
+
+      if(evt.target.id === 'filter-discussed') {
+        const newPosts = [...posts];
+        renderSimilarPhotos(newPosts.sort((a,b) => b.likes - a.likes));
+      } else if (evt.target.id === 'filter-random'){
+        const newPosts = [...posts];
+        renderSimilarPhotos(newPosts.splice(0,10).sort(() => 0.5 - Math.random()));
+      } else{
+        renderSimilarPhotos(posts);
+      }
+    }), TIME_OF_DELAY);
 };
 const setFilter = (posts) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
@@ -50,4 +57,3 @@ const setFilter = (posts) => {
 };
 
 export {renderSimilarPhotos, similarPictures,setFilter};
-
