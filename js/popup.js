@@ -40,7 +40,25 @@ const createComment = (comment) => {
   commentsFragment.appendChild(list);
 
 };
+const renderNewComments = (comments) => {
+  const arr = comments.slice(currentCount,currentCount + COUNT_COMMENTS);
+  // console.log(arr);
 
+  arr.forEach(({avatar,message,name}) => {
+
+    createComment({avatar,message,name});
+    socialCommentCount.textContent = arr.length;
+
+    commentsList.innerHTML = '';
+
+    if (comments.length > COUNT_COMMENTS) {
+      ButtonNextComment.classList.remove('hidden');
+    } else {
+      ButtonNextComment.classList.add('hidden');
+    }
+  });
+  // currentCount += COUNT_COMMENTS;
+};
 commentsList.innerHTML = '';
 const openPopUp = (miniatures) => {
   similarPictures.addEventListener('click', (evt) => {
@@ -57,31 +75,13 @@ const openPopUp = (miniatures) => {
           likeCounter.textContent = likes;
           numberOfComments.textContent = comments.length;
           photoDescription.textContent = description;
-          // console.log(comments);
+          console.log(comments);
 
-          const ttt = () => {
-            const arr = comments.slice(currentCount,currentCount + COUNT_COMMENTS);
-            // console.log(arr);
 
-            arr.forEach(({avatar,message,name}) => {
-
-              createComment({avatar,message,name});
-              socialCommentCount.textContent = arr.length;
-
-              commentsList.innerHTML = '';
-
-              if (comments.length > COUNT_COMMENTS) {
-                ButtonNextComment.classList.remove('hidden');
-              } else {
-                ButtonNextComment.classList.add('hidden');
-              }
-            });
-            // currentCount += COUNT_COMMENTS;
-          };
-          ttt();
+          renderNewComments(comments);
 
         }
-        // ButtonNextComment.addEventListener('click', ttt);
+        // ButtonNextComment.addEventListener('click', renderNewComments(comments));
 
       });
     }
