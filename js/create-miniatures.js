@@ -50,6 +50,7 @@ const changeFilter = (posts) => {
       }
     }), TIME_OF_DELAY);
 };
+
 const setFilter = (posts) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   renderSimilarPhotos(posts);
