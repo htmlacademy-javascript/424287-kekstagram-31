@@ -13,7 +13,7 @@ const commentsList = document.querySelector('.social__comments');
 const commentsFragment = document.createDocumentFragment();
 const ButtonNextComment = document.querySelector('.comments-loader');
 const COUNT_COMMENTS = 5;
-let currentCount = 0;
+const currentCount = 0;
 
 
 const openModal = () => {
@@ -57,13 +57,13 @@ const openPopUp = (miniatures) => {
           likeCounter.textContent = likes;
           numberOfComments.textContent = comments.length;
           photoDescription.textContent = description;
-          console.log(comments);
+          // console.log(comments);
 
           const ttt = () => {
             const arr = comments.slice(currentCount,currentCount + COUNT_COMMENTS);
-            console.log(arr);
+            // console.log(arr);
 
-            arr.forEach(({avatar,message,name},i) => {
+            arr.forEach(({avatar,message,name}) => {
 
               createComment({avatar,message,name});
               socialCommentCount.textContent = arr.length;
