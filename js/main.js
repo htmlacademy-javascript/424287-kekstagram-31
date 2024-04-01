@@ -9,7 +9,6 @@ import './avatar.js';
 import {setFilter} from './create-miniatures.js';
 import {setUserFormSubmit, closeUserModal} from './form-validate.js';
 import {getData} from './api.js';
-
 import {showErrorDataMessage} from './util.js';
 import {openPopUp} from './popup.js';
 getData()
