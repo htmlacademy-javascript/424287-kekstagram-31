@@ -9,12 +9,12 @@ const numberOfComments = document.querySelector('.social__comment-total-count');
 const photoDescription = document.querySelector('.social__caption');
 const socialCommentCount = document.querySelector('.social__comment-shown-count');
 const commentsList = document.querySelector('.social__comments');
-// const commentsSet = document.querySelectorAll('.social__comment');
 const commentsFragment = document.createDocumentFragment();
-const ButtonNextComment = document.querySelector('.comments-loader');
+const buttonNextComment = document.querySelector('.comments-loader');
 const COUNT_COMMENTS = 5;
-const currentCount = 0;
-
+let currentCount = 0;
+let arrOfcomments = [];
+// commentsList.innerHTML = '';
 
 const openModal = () => {
   popup.classList.remove('hidden');
@@ -40,11 +40,35 @@ const createComment = (comment) => {
   commentsFragment.appendChild(list);
 
 };
+const renderNewComments = () => {
 
+  const arr = arrOfcomments.slice(currentCount,currentCount + COUNT_COMMENTS);
+
+  arr.forEach(({avatar,message,name}) => {
+
+    createComment({avatar,message,name});
+
+    socialCommentCount.textContent = arr.length + currentCount;
+
+    if (arr.length + currentCount < arrOfcomments.length) {
+      buttonNextComment.classList.remove('hidden');
+    } else {
+      buttonNextComment.classList.add('hidden');
+    }
+    commentsList.appendChild(commentsFragment);
+
+  });
+  currentCount += COUNT_COMMENTS;
+};
+const renderComments = (currentComments) => {
+  arrOfcomments = currentComments;
+  renderNewComments();
+  buttonNextComment.addEventListener('click', renderNewComments);
+
+};
 commentsList.innerHTML = '';
 const openPopUp = (miniatures) => {
   similarPictures.addEventListener('click', (evt) => {
-
     if (evt.target.closest('.picture')){
       evt.preventDefault();
       openModal();
@@ -57,51 +81,36 @@ const openPopUp = (miniatures) => {
           likeCounter.textContent = likes;
           numberOfComments.textContent = comments.length;
           photoDescription.textContent = description;
-          // console.log(comments);
 
-          const ttt = () => {
-            const arr = comments.slice(currentCount,currentCount + COUNT_COMMENTS);
-            // console.log(arr);
 
-            arr.forEach(({avatar,message,name}) => {
-
-              createComment({avatar,message,name});
-              socialCommentCount.textContent = arr.length;
-
-              commentsList.innerHTML = '';
-
-              if (comments.length > COUNT_COMMENTS) {
-                ButtonNextComment.classList.remove('hidden');
-              } else {
-                ButtonNextComment.classList.add('hidden');
-              }
-            });
-            // currentCount += COUNT_COMMENTS;
-          };
-          ttt();
+          renderComments(comments);
 
         }
-        // ButtonNextComment.addEventListener('click', ttt);
 
       });
     }
-    commentsList.appendChild(commentsFragment);
     document.querySelector('body').classList.add('modal-open');
   }
   );
 };
+const clearListOfComments = () => {
+  currentCount = 0;
+  commentsList.innerHTML = '';
+  // document.removeEventListener('keydown', onDocumentKeydown);
 
+};
 const closeModal = () => {
-
+  clearListOfComments();
   popup.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  // document.removeEventListener('keydown', onDocumentKeydown);
 
 };
 const onDocumentKeydown = (evt) => {
   if(evt.key === 'Escape') {
     evt.preventDefault();
     closeModal();
+    clearListOfComments();
+
   }
 };
 

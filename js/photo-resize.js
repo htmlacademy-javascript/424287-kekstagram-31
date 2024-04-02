@@ -6,10 +6,10 @@ const inputValue = document.querySelector('.scale__control--value');
 const STEP = 25;
 const minValue = 25;
 const maxValue = 100;
-// let value = scaleValue.value.replace('%', ' ');
+let value = parseInt(scaleValue.value, 10);
 
 btnSmaller.addEventListener('click', () => {
-  let value = scaleValue.value.replace('%', ' ');
+  value = scaleValue.value.replace('%', ' ');
 
   if (value > minValue) {
 
@@ -22,7 +22,9 @@ btnSmaller.addEventListener('click', () => {
   }
 });
 btnBigger.addEventListener('click', () => {
-  let value = scaleValue.value.replace('%', ' ');
+  value = parseInt(scaleValue.value, 10);
+
+  // value = scaleValue.value.replace('%', ' ');
 
   if (value < maxValue) {
     value += STEP;

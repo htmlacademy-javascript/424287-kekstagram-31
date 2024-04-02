@@ -41,7 +41,7 @@ const changeFilter = (posts) => {
 
       if(evt.target.id === 'filter-discussed') {
         const newPosts = [...posts];
-        renderSimilarPhotos(newPosts.sort((a,b) => b.likes - a.likes));
+        renderSimilarPhotos(newPosts.sort((a,b) => b.comments.length - a.comments.length));
       } else if (evt.target.id === 'filter-random'){
         const newPosts = [...posts];
         renderSimilarPhotos(newPosts.splice(0,10).sort(() => 0.5 - Math.random()));
