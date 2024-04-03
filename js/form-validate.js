@@ -99,7 +99,7 @@ const validateComment = (value) =>
 
 
 const validateRepeatHashes = (value) => {
-  const arr = value.trim().split(' ');
+  const arr = value.toLowerCase().trim().split(' ');
   const duplicates = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
