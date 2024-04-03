@@ -48,7 +48,7 @@ const closeModal = () => {
   // document.removeEventListener('keydown', onDocumentKeydown);
 };
 const closeSuccessMessage = () => {
-  document.querySelector('.success').classList.add('hidden');
+  // document.querySelector('.success').classList.add('hidden');
   closeModal();
 };
 
@@ -81,7 +81,9 @@ const pristine = new Pristine(uploadForm,{
 });
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const validateHashtag = (value) => {
-  if(value === '') {
+  if(value === ' ') {
+    return true;
+  } else if(value === '') {
     return true;
   }
   const arr = value.trim().split(' ');

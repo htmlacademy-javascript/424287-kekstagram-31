@@ -55,6 +55,8 @@ const closeNotice = (evt) => {
   const closeModalBtn = existElement.querySelector('button');
   if (evt.target === existElement || evt.target === closeModalBtn) {
     existElement.remove();
+    document.body.removeEventListener('click', closeNotice);
+
   }
 };
 const showNotice = (template, trigger = null) => {
