@@ -1,6 +1,6 @@
 import {imageContainer} from './photo-resize.js';
 import {effectLevelContainer,effectsInput} from './effect-slider.js';
-import {showErrorMessage} from './util.js';
+import {showNotice,errorTemplate} from './util.js';
 import {sendData} from './api.js';
 
 const COMMENT_LENGTH = 140;
@@ -20,14 +20,14 @@ const commentText = uploadForm.querySelector('.text__description');
 const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
 
-const showSuccessMessage = () => {
-  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successMessageFragment = document.createDocumentFragment();
-  const message = successMessageTemplate.cloneNode(true);
-  message.classList.add('hidden');
-  successMessageFragment.appendChild(message);
-  document.body.appendChild(successMessageFragment);
-};
+// const showSuccessMessage = () => {
+//   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+//   const successMessageFragment = document.createDocumentFragment();
+//   const message = successMessageTemplate.cloneNode(true);
+//   message.classList.add('hidden');
+//   successMessageFragment.appendChild(message);
+//   document.body.appendChild(successMessageFragment);
+// };
 const closeModal = () => {
   // if (evt.target === tagText || evt.target === commentText || evt.target.closest('.effects__list') || evt.target.closest('.img-upload__effect-level') || evt.target.closest('.img-upload__submit')) {
   //   evt.stopPropagation();
@@ -119,8 +119,7 @@ pristine.addValidator(tagText, validateCountOfHashtags,'Нельзя указы�
 pristine.addValidator(tagText, validateRepeatHashes,'Нельзя указывать одинаковые хэштеги');
 
 pristine.addValidator(commentText, validateComment,'Длина комментария не должна быть больше 140 символов');
-showSuccessMessage();
-// createErrorMessage();
+
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -140,14 +139,14 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(new FormData(uploadForm))
         .then(onSuccess)
         .catch(() => {
-          showErrorMessage();
+          showNotice(errorTemplate);
         })
         .finally(unblockSubmitButton);
     }
   });
 };
 const closeUserModal = () => {
-  document.querySelector('.success').classList.remove('hidden');
+  // document.querySelector('.success').classList.remove('hidden');
   const closeBtn = document.querySelector('.success__button');
   closeBtn.addEventListener('click', closeSuccessMessage);
 
@@ -157,4 +156,4 @@ document.addEventListener('keydown', onDocumentKeydown);
 closeButton.addEventListener('click', closeModal);
 // closeModalBtn.addEventListener('click',closeModal);
 // document.querySelector('.img-upload__overlay').addEventListener('click', closeModal);
-export {setUserFormSubmit, closeUserModal};
+export {setUserFormSubmit, closeUserModal,closeModal};

@@ -1,5 +1,5 @@
-import {showErrorDataMessage,showErrorMessage,createErrorMessage} from './util.js';
-createErrorMessage();
+import {showErrorDataMessage,showNotice} from './util.js';
+
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
@@ -7,7 +7,7 @@ const Route = {
 };
 const ErrorText = {
   GET_DATA: showErrorDataMessage,
-  SEND_DATA: showErrorMessage,
+  SEND_DATA: showNotice,
 };
 
 const Method = {

@@ -7,9 +7,9 @@ import './api.js';
 import './avatar.js';
 
 import {setFilter} from './create-miniatures.js';
-import {setUserFormSubmit, closeUserModal} from './form-validate.js';
+import {setUserFormSubmit,closeModal} from './form-validate.js';
 import {getData} from './api.js';
-import {showErrorDataMessage} from './util.js';
+import {showErrorDataMessage,successTemplate,showNotice} from './util.js';
 import {openPopUp} from './popup.js';
 getData()
   .then((photos) => {
@@ -20,5 +20,7 @@ getData()
     showErrorDataMessage();
   });
 
-setUserFormSubmit(closeUserModal);
+setUserFormSubmit(() => {
+  showNotice(successTemplate, () => closeModal());
+});
 
