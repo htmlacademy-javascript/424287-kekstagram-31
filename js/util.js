@@ -33,36 +33,28 @@ const showErrorDataMessage = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const createErrorMessage = () => {
-  const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorMessageFragment = document.createDocumentFragment();
-  const message = errorMessageTemplate.cloneNode(true);
-  errorMessageFragment.appendChild(message);
-  document.body.appendChild(errorMessageFragment);
-  document.querySelector('.error').classList.add('hidden');
-};
-const onDocumentKeydown = (evt) => {
-  if(evt.key === 'Escape') {
-    evt.preventDefault();
-    document.querySelector('.error').classList.add('hidden');
+const errorTemplate = document.querySelector('#error').content;
+const successTemplate = document.querySelector('#success').content;
+const closeNotice = (evt) => {
+  evt.stopPropagation();
+  const existElement = document.querySelector('.error') || document.querySelector('.success');
+  const closeModalBtn = existElement.querySelector('button');
+  if (evt.target === existElement || evt.target === closeModalBtn || evt.key === 'Escape') {
+    existElement.remove();
+    document.body.removeEventListener('click', closeNotice);
+    document.body.removeEventListener('keydown', closeNotice);
+
   }
 };
+const showNotice = (template, trigger = null) => {
+  trigger?.();
+  const message = template.cloneNode(true);
+  document.body.append(message);
+  document.body.addEventListener('click', closeNotice);
+  document.body.addEventListener('keydown', closeNotice);
 
-const showErrorMessage = () => {
-  document.querySelector('.error').classList.remove('hidden');
-
-  const errorBlock = document.querySelector('.error');
-  const closeModalBtn = errorBlock.querySelector('.error__button');
-  closeModalBtn.addEventListener('click', () => {
-    document.querySelector('.error').classList.add('hidden');
-    document.querySelector('.error').addEventListener('click', () => {
-      document.querySelector('.error').classList.add('hidden');
-      onDocumentKeydown();
-
-    });
-
-  });
 };
+
 const debounce = (callback, timeoutDelay = 500) => {
 
   let timeoutId;
@@ -75,4 +67,4 @@ const debounce = (callback, timeoutDelay = 500) => {
 export {randomElement};
 export {getRandomInteger};
 export {createRandomId};
-export {showErrorDataMessage,showErrorMessage, createErrorMessage,debounce};
+export {showErrorDataMessage,debounce,showNotice,errorTemplate,successTemplate};

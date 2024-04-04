@@ -1,10 +1,8 @@
 import { debounce } from './util.js';
-const TIME_OF_DELAY = 500;
 const similarPictures = document.querySelector('.pictures');
 const photosTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const filterForm = document.querySelector('.img-filters__form');
 const buttonsChangeFilter = document.querySelectorAll('.img-filters__button');
-
 const renderSimilarPhotos = (similarMiniatures) => {
 
   const miniaturesFragment = document.createDocumentFragment();
@@ -30,25 +28,27 @@ const renderSimilarPhotos = (similarMiniatures) => {
   similarPictures.appendChild(miniaturesFragment);
 
 };
+const debounceRender = debounce(renderSimilarPhotos);
+
 const changeFilter = (posts) => {
 
-  filterForm.addEventListener('click', debounce(
+  filterForm.addEventListener('click',
     (evt) => {
+      const newPosts = [...posts];
+
       for (const btn of buttonsChangeFilter) {
         btn.classList.remove('img-filters__button--active');
       }
       evt.target.classList.add('img-filters__button--active');
 
       if(evt.target.id === 'filter-discussed') {
-        const newPosts = [...posts];
         renderSimilarPhotos(newPosts.sort((a,b) => b.comments.length - a.comments.length));
       } else if (evt.target.id === 'filter-random'){
-        const newPosts = [...posts];
-        renderSimilarPhotos(newPosts.splice(0,10).sort(() => 0.5 - Math.random()));
+        debounceRender(newPosts.splice(0,10).sort(() => 0.5 - Math.random()));
       } else{
         renderSimilarPhotos(posts);
       }
-    }), TIME_OF_DELAY);
+    });
 };
 
 const setFilter = (posts) => {

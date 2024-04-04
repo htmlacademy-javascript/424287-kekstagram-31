@@ -1,9 +1,9 @@
-import {imageContainer} from './photo-resize';
+import {imageUpload} from './photo-resize';
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectList = document.querySelector('.effects__list');
 const valueElement = document.querySelector('.effect-level__value');
-const effectsInput = document.querySelector('.effects__radio');
+const effectsInput = document.querySelectorAll('.effects__radio');
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -77,14 +77,15 @@ effectList.addEventListener('change', (evt) => {
   });
   sliderElement.noUiSlider.on('update', () => {
     valueElement.value = sliderElement.noUiSlider.get();
-    imageContainer.style.filter = `${selectedEffect.style}(${valueElement.value}${selectedEffect.unit})`;
+    imageUpload.style.filter = `${selectedEffect.style}(${valueElement.value}${selectedEffect.unit})`;
     if(selectedEffect.name === 'none') {
       effectLevelContainer.classList.add('hidden');
-      imageContainer.style.filter = `${selectedEffect.style}`;
+      imageUpload.style.filter = `${selectedEffect.style}`;
 
     } else {
       effectLevelContainer.classList.remove('hidden');
-      effectsInput.value = imageContainer.style.filter;
+      valueElement.value = imageUpload.style.filter;
+      effectsInput.value = imageUpload.style.filter;
     }
   });
 });
