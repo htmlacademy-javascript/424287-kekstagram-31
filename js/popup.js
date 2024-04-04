@@ -19,6 +19,27 @@ let arrOfcomments = [];
 const openModal = () => {
   popup.classList.remove('hidden');
 };
+const clearListOfComments = () => {
+  currentCount = 0;
+  commentsList.innerHTML = '';
+  // document.removeEventListener('keydown', onDocumentKeydown);
+
+};
+const closeModal = () => {
+  clearListOfComments();
+  popup.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+
+};
+
+const onDocumentKeydown = (evt) => {
+  if(evt.key === 'Escape') {
+    evt.preventDefault();
+    closeModal();
+    clearListOfComments();
+
+  }
+};
 /* ------*/
 const createComment = (comment) => {
 
@@ -92,29 +113,9 @@ const openPopUp = (miniatures) => {
     document.querySelector('body').classList.add('modal-open');
   }
   );
-};
-const clearListOfComments = () => {
-  currentCount = 0;
-  commentsList.innerHTML = '';
-  // document.removeEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 
 };
-const closeModal = () => {
-  clearListOfComments();
-  popup.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-
-};
-const onDocumentKeydown = (evt) => {
-  if(evt.key === 'Escape') {
-    evt.preventDefault();
-    closeModal();
-    clearListOfComments();
-
-  }
-};
-
-document.addEventListener('keydown', onDocumentKeydown);
 
 closeButton.addEventListener('click', closeModal);
 // document.querySelector('.overlay').addEventListener('click', closeModal);
