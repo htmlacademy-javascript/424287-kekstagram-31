@@ -71,6 +71,7 @@ const closeModal = () => {
   effectsInput.value = 'none';
   imageContainer.style.transform = 'scale(1)';
   imagePreview.style.transform = 'scale(1)';
+  imagePreview.style.filter = 'none';
   tagText.value = '';
   uploadForm.reset();
   pristine.reset();
@@ -133,5 +134,4 @@ const setUserFormSubmit = (onSuccess) => {
 
 closeButton.addEventListener('click', closeModal);
 
-// document.querySelector('.img-upload__overlay').addEventListener('click', closeModal);
 export {setUserFormSubmit, closeModal};

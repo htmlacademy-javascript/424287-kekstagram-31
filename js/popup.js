@@ -14,7 +14,6 @@ const buttonNextComment = document.querySelector('.comments-loader');
 const COUNT_COMMENTS = 5;
 let currentCount = 0;
 let arrOfcomments = [];
-// commentsList.innerHTML = '';
 
 const openModal = () => {
   popup.classList.remove('hidden');
@@ -22,7 +21,6 @@ const openModal = () => {
 const clearListOfComments = () => {
   currentCount = 0;
   commentsList.innerHTML = '';
-  // document.removeEventListener('keydown', onDocumentKeydown);
 
 };
 const closeModal = () => {
@@ -40,7 +38,6 @@ const onDocumentKeydown = (evt) => {
 
   }
 };
-/* ------*/
 const createComment = (comment) => {
 
   const list = document.createElement('li');
@@ -118,6 +115,5 @@ const openPopUp = (miniatures) => {
 };
 
 closeButton.addEventListener('click', closeModal);
-// document.querySelector('.overlay').addEventListener('click', closeModal);
 
 export {openPopUp};
