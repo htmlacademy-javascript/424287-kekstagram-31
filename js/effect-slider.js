@@ -22,7 +22,8 @@ const EFFECTS = [
     max: 1,
     step: 0.1,
     style: 'grayscale',
-    unit: ''
+    unit: '',
+    start: 1
   },
   {
     name: 'sepia',
@@ -30,35 +31,40 @@ const EFFECTS = [
     max: 1,
     step: 0.1,
     style: 'sepia',
-    unit: ''
+    unit: '',
+    start: 1
   },
   {name: 'marvin',
     min: 0,
     max: 100,
     step: 1,
     style: 'invert',
-    unit: '%'
+    unit: '%',
+    start: 100
   },
   {name: 'phobos',
     min: 0,
     max: 3,
     step: 0.1,
     style: 'blur',
-    unit: 'px'
+    unit: 'px',
+    start: 3
   },
   {name:'heat',
     min: 1,
     max: 3,
     step: 0.1,
     style: 'brightness',
-    unit: ''
+    unit: '',
+    start: 3
   },
   {
     name: 'none',
     min: 0,
     max: 1,
     style: 'none',
-    unit: ''
+    unit: '',
+    start: 1
   }
 ];
 effectLevelContainer.classList.add('hidden');
@@ -73,10 +79,11 @@ effectList.addEventListener('change', (evt) => {
       max: selectedEffect.max
     },
     step: selectedEffect.step,
-    start: selectedEffect.min
+    start: selectedEffect.start
   });
   sliderElement.noUiSlider.on('update', () => {
-    valueElement.value = sliderElement.noUiSlider.get();
+    const valueEffect = sliderElement.noUiSlider.get();
+    valueElement.value = valueEffect;
     imageUpload.style.filter = `${selectedEffect.style}(${valueElement.value}${selectedEffect.unit})`;
     if(selectedEffect.name === 'none') {
       effectLevelContainer.classList.add('hidden');
@@ -84,7 +91,6 @@ effectList.addEventListener('change', (evt) => {
 
     } else {
       effectLevelContainer.classList.remove('hidden');
-      valueElement.value = imageUpload.style.filter;
       effectsInput.value = imageUpload.style.filter;
     }
   });

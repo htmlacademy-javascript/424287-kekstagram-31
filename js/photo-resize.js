@@ -25,7 +25,6 @@ btnSmaller.addEventListener('click', () => {
 btnBigger.addEventListener('click', () => {
   value = parseInt(scaleValue.value, 10);
 
-  // value = scaleValue.value.replace('%', ' ');
 
   if (value < maxValue) {
     value += STEP;
