@@ -1,5 +1,5 @@
 import {similarPictures} from './create-miniatures.js';
-
+const COUNT_COMMENTS = 5;
 const popup = document.querySelector('.big-picture');
 const likeCounter = popup.querySelector('.likes-count');
 const closeButton = popup.querySelector('#picture-cancel');
@@ -11,7 +11,6 @@ const socialCommentCount = document.querySelector('.social__comment-shown-count'
 const commentsList = document.querySelector('.social__comments');
 const commentsFragment = document.createDocumentFragment();
 const buttonNextComment = document.querySelector('.comments-loader');
-const COUNT_COMMENTS = 5;
 let currentCount = 0;
 let arrOfcomments = [];
 
