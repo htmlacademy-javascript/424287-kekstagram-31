@@ -1,20 +1,4 @@
 import {imageUpload} from './photo-resize';
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevelContainer = document.querySelector('.img-upload__effect-level');
-const effectList = document.querySelector('.effects__list');
-const valueElement = document.querySelector('.effect-level__value');
-const effectsInput = document.querySelectorAll('.effects__radio');
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-});
-
 const EFFECTS = [
   {
     name: 'chrome',
@@ -67,6 +51,23 @@ const EFFECTS = [
     start: 1
   }
 ];
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectList = document.querySelector('.effects__list');
+const valueElement = document.querySelector('.effect-level__value');
+const effectsInput = document.querySelectorAll('.effects__radio');
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+});
+
+
 effectLevelContainer.classList.add('hidden');
 
 effectList.addEventListener('change', (evt) => {
