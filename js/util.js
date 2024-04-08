@@ -35,23 +35,29 @@ const showErrorDataMessage = () => {
 
 const errorTemplate = document.querySelector('#error').content;
 const successTemplate = document.querySelector('#success').content;
-const closeNotice = (evt) => {
+const OnButtonKeydown = (evt) => {
   evt.stopPropagation();
   const existElement = document.querySelector('.error') || document.querySelector('.success');
-  const closeModalBtn = existElement.querySelector('button');
-  if (evt.target === existElement || evt.target === closeModalBtn || evt.key === 'Escape') {
+  if (evt.key === 'Escape') {
     existElement.remove();
-    document.body.removeEventListener('click', closeNotice);
-    document.body.removeEventListener('keydown', closeNotice);
+    document.body.removeEventListener('keydown', OnButtonKeydown);
 
+  }
+};
+const OnButtonClick = (evt) => {
+  const existElement = document.querySelector('.error') || document.querySelector('.success');
+  const closeModalBtn = existElement.querySelector('button');
+  if (evt.target === existElement || evt.target === closeModalBtn) {
+    existElement.remove();
+    document.body.removeEventListener('click', OnButtonClick);
   }
 };
 const showNotice = (template, trigger = null) => {
   trigger?.();
   const message = template.cloneNode(true);
   document.body.append(message);
-  document.body.addEventListener('click', closeNotice);
-  document.body.addEventListener('keydown', closeNotice);
+  document.body.addEventListener('click', OnButtonClick);
+  document.body.addEventListener('keydown', OnButtonKeydown);
 
 };
 

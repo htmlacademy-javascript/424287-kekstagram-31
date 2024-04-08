@@ -7,12 +7,9 @@ const renderSimilarPhotos = (similarMiniatures) => {
 
   const miniaturesFragment = document.createDocumentFragment();
   const pictures = document.querySelectorAll('.picture');
-
   for (const img of pictures) {
     similarPictures.removeChild(img);
   }
-
-
   similarMiniatures
     .forEach(({id,url,description,likes,comments}) => {
       const photo = photosTemplate.cloneNode(true);
@@ -42,11 +39,11 @@ const changeFilter = (posts) => {
       evt.target.classList.add('img-filters__button--active');
 
       if(evt.target.id === 'filter-discussed') {
-        renderSimilarPhotos(newPosts.sort((a,b) => b.comments.length - a.comments.length));
+        debounceRender(newPosts.sort((a,b) => b.comments.length - a.comments.length));
       } else if (evt.target.id === 'filter-random'){
         debounceRender(newPosts.splice(0,10).sort(() => 0.5 - Math.random()));
       } else{
-        renderSimilarPhotos(posts);
+        debounceRender(posts);
       }
     });
 };

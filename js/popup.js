@@ -28,7 +28,7 @@ const closeModal = () => {
   document.querySelector('body').classList.remove('modal-open');
 
 };
-
+const onCloseButtonClick = () => closeModal();
 const onDocumentKeydown = (evt) => {
   if(evt.key === 'Escape') {
     evt.preventDefault();
@@ -77,10 +77,11 @@ const renderNewComments = () => {
   });
   currentCount += COUNT_COMMENTS;
 };
+const onButtonNextClick = () => renderNewComments();
 const renderComments = (currentComments) => {
   arrOfcomments = currentComments;
   renderNewComments();
-  buttonNextComment.addEventListener('click', renderNewComments);
+  buttonNextComment.addEventListener('click', onButtonNextClick);
 
 };
 commentsList.innerHTML = '';
@@ -113,6 +114,6 @@ const openPopUp = (miniatures) => {
 
 };
 
-closeButton.addEventListener('click', closeModal);
+closeButton.addEventListener('click', onCloseButtonClick);
 
 export {openPopUp};

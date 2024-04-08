@@ -4,6 +4,7 @@ import {showNotice,errorTemplate} from './util.js';
 import {sendData} from './api.js';
 
 const COMMENT_LENGTH = 140;
+const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const NUMBER_HASHTAGS = 5;
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -24,20 +25,14 @@ const pristine = new Pristine(uploadForm,{
   errorTextClass: 'img-upload__field-wrapper--error'
 
 });
-const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const validateHashtag = (value) => {
-  if(value === ' ') {
-    return true;
-  } else if(value === '') {
-    return true;
-  }
-  const arr = value.trim().split(' ');
-  return arr.every((elem) => hashtag.test(elem));
+  const arr = value.trim().split(' ').filter(Boolean);
+  return arr.every((elem) => HASHTAG.test(elem));
 };
 
 
 const validateCountOfHashtags = (value) => {
-  const arr = value.trim().split(' ');
+  const arr = value.trim().split(' ').filter(Boolean);
   if(arr.length <= NUMBER_HASHTAGS) {
     return true;
   }
@@ -47,7 +42,7 @@ const validateComment = (value) =>
 
 
 const validateRepeatHashes = (value) => {
-  const arr = value.toLowerCase().trim().split(' ');
+  const arr = value.toLowerCase().trim().split(' ').filter(Boolean);
   const duplicates = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
@@ -76,6 +71,7 @@ const closeModal = () => {
   uploadForm.reset();
   pristine.reset();
 };
+const onModalCloseBtnClick = () => closeModal();
 const onDocumentKeydown = (evt) => {
 
   if(evt.key === 'Escape') {
@@ -96,8 +92,6 @@ uploadImg.addEventListener('change', () => {
 
 });
 
-
-//Условия для валидности
 
 // Проверка формы на валидность
 pristine.addValidator(tagText, validateHashtag,'Введите валидный хэштег');
@@ -121,6 +115,7 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      tagText.value = tagText.value.trim().replaceAll(/\s+/g,' ');
       blockSubmitButton();
       sendData(new FormData(uploadForm))
         .then(onSuccess)
@@ -132,6 +127,6 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-closeButton.addEventListener('click', closeModal);
+closeButton.addEventListener('click', onModalCloseBtnClick);
 
 export {setUserFormSubmit, closeModal};
